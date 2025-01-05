@@ -1,11 +1,11 @@
 const CacheName = 'cache-v1'; // Define your cache name
 
-// Install event - Cache necessary files
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CacheName).then((cache) => {
             return cache.addAll([
-                'index.html',
+                // List of files to cache
+                'index.html', // Update this path if necessary
                 'stylesheet.css',
                 'pogba.png',
                 'main.js',
@@ -14,40 +14,27 @@ self.addEventListener('install', (event) => {
                 'second.html',
                 'third.html',
                 'about.html',
+                 // Add this if you want to cache the contacts page
+                // Add any other assets you want to cache
             ]);
-        }).catch((err) => {
-            console.error('Failed to cache files:', err);
         })
     );
 });
 
-// Activate event - Clean up old caches
 self.addEventListener('activate', (event) => {
+    // Only keep new version of cache
     const cacheWhitelist = [CacheName];
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    if (!cacheWhitelist.includes(cacheName)) {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
                         console.log('Deleting old cache:', cacheName);
+                        // Delete old caches
                         return caches.delete(cacheName);
                     }
                 })
             );
-        })
-    );
-});
-
-// Fetch event - Serve cached content when offline
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                return cachedResponse; // Return cached response
-            }
-
-            // Fetch from network if not in cache
-            return fetch(event.request);
         })
     );
 });
