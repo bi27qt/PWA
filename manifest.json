@@ -1,6 +1,6 @@
 {
-    "name": "Manchester United Webpage",
-    "short_name": "MUFC Web",
+    "name": "Task Manager",
+    "short_name": "Manager",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#c28477", 

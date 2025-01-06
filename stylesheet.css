@@ -1,82 +1,141 @@
-html, body {
-    background-color: rgb(250, 192, 192);
-    font-family: Arial, Helvetica, sans-serif;
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100%;
-}
+    background-color: #f4f4f9;
+  }
 
-h1 {
-    text-align: center;
-    font-size: 80px;
-}
-
-p {
-    font-size: 26px;
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-}
-
-.button {
-    color: white;
-    background-color: #000000; 
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px; 
-}
-
-.button-container {
-    text-align: center;
-}
-
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    display: inline-block;
-}
-
-li {
-    display: inline;
-    float: left;
-    text-align: center;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover {
-    background-color: #111;
-}
-
-.active {
-    background-color: #04AA6D;
-}
-
-.navbar {
+  header, main, footer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  header nav ul {
     display: flex;
-    list-style-type: none;
     justify-content: center;
-    flex-wrap: wrap;
     background-color: #333;
-    padding: 1em;
+  }
+  
+  header nav ul li {
+    list-style: none;
+  }
+  
+  header nav ul li a {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+  }
+  
+  header nav ul li a:hover {
+    background-color: #575757;
+  }
+  
+  /* Main Content */
+  main {
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  /* Responsive Layout */
+  @media (max-width: 768px) {
+    header nav ul {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    button, input, textarea {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+  
+  /* Form Styling */
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+
+  /* CSS for Active Navigation Link */
+.nav-link.active {
+    background-color: #04AA6D;
+    color: white;
 }
+
+/* Button Styles */
+.btn-submit {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .btn-submit:hover {
+    background-color: #45a049;
+  }
+  
+  /* Success Message */
+  .success-message {
+    color: green;
+    font-size: 1.2em;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: red;
+    font-size: 1.2em;
+  }
+
+  /* Smooth transitions for buttons and task items */
+button, .task {
+    transition: all 0.3s ease;
+  }
+  
+  button:hover, .task:hover {
+    background-color: #d1e7dd;
+  }  
+
+  .task-form {
+    width: 100%;
+  }
+
+  .nav-link {
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Checkmark Icon */
+.checkmark {
+    color: green;
+    font-size: 18px;
+    margin-left: 10px;
+  }
+  
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .nav-link {
+      padding: 10px 15px;
+    }
+  }
+  
+
+  #task-manager-image {
+    margin-top: 20px;
+    max-width: 100%; /* Ensures the image fits within the screen */
+    height: auto;
+  }
