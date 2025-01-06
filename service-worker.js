@@ -13,8 +13,6 @@ self.addEventListener('install', (event) => {
                 '/stylesheet.css',
                 '/main.js',
                 '/task_manager.png',
-                '/images/icon-192x192.png', // Ensure all required images are cached
-                '/images/badge.png' // Ensure badge is cached
             ]);
         })
     );

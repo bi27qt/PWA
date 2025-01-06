@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Ensure the task list container exists before trying to use it
+    const taskListContainer = document.getElementById('tasks-list');
+
     // Add this script to automatically highlight the active page in the navbar
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
@@ -48,16 +51,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Convert base64 to base64url format without padding
+    function base64ToBase64Url(base64) {
+        return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
     // Register the Service Worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js')
             .then((registration) => {
                 console.log('Service Worker registered with scope:', registration.scope);
 
+                // VAPID Public Key in base64 format (replace with your actual key)
+                const base64VapidKey = 'BJEJg1W0xlMj3q5ONwlZ5U7JSi8uy_OkDGPZjKJik0AYSXPNheNjQQbjkVXoZwQh0IB77PGsPtBSAOJvK-A3tEY';
+
+                // Convert VAPID Key to base64url
+                const base64urlVapidKey = base64ToBase64Url(base64VapidKey);
+                console.log('Converted base64url VAPID Key:', base64urlVapidKey);
+
                 // After registration, subscribe the user for push notifications
                 registration.pushManager.subscribe({
                     userVisibleOnly: true, // Notification will be shown to the user
-                    applicationServerKey: 'BJEJg1W0xlMj3q5ONwlZ5U7JSi8uy_OkDGPZjKJik0AYSXPNheNjQQbjkVXoZwQh0IB77PGsPtBSAOJvK-A3tEY' // Your public VAPID key
+                    applicationServerKey: base64urlVapidKey // Use the base64url encoded key
                 })
                 .then((subscription) => {
                     console.log('User is subscribed to push notifications:', subscription);
@@ -114,8 +129,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Display tasks from IndexedDB
     function displayTasks() {
-        const taskListContainer = document.getElementById('tasks-list');
-        taskListContainer.innerHTML = ''; // Clear current tasks before displaying new ones
+        if (!taskListContainer) {
+            console.error("Task list container is missing.");
+            return; // Return early if taskListContainer doesn't exist
+        }
+        
+        // Clear the task list before displaying new ones
+        taskListContainer.innerHTML = '';
 
         const transaction = db.transaction(['tasks'], 'readonly');
         const store = transaction.objectStore('tasks');
@@ -131,10 +151,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 tasks.forEach(function (task) {
                     const taskDiv = document.createElement('div');
                     taskDiv.classList.add('task');
-                    taskDiv.innerHTML = `
+                    taskDiv.innerHTML = `    
                         <p><strong>${task.title}</strong><br>${task.description}<br><em>Deadline: ${task.deadline}</em></p>
                     `;
-                    taskListContainer.appendChild(taskDiv);
+                    taskListContainer.appendChild(taskDiv); // Append the task div to the container
                 });
             }
         };
